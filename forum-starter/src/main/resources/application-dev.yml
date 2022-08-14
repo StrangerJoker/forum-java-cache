@@ -1,0 +1,81 @@
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: true
+  servlet:
+    multipart:
+      max-file-size: 3MB
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/developers?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useAffectedRows=true&serverTimezone=UTC
+    username: root
+    password: 123456
+
+  redis:
+    host: 192.168.16.129
+#    host: localhost 192.168.16.129
+    password:
+    port: 6379
+    ssl: false
+    #连接超时时间 这里用的是Duration时间类型,这里配置是是48小时,如果你不想你的连接超时,把这个配置给注掉
+    #connect-timeout: PT48H
+    #读取数据超时时间,这里5秒查不到数据就超时
+    timeout: PT5S
+    database: 0
+    client-type: jedis
+    #这里采用jedis作为客户端
+    jedis:
+      pool:
+        #redis最小空闲连接数量,当空闲连接小于这个数之后会去申请空闲连接直到最大的空闲连接数量
+        min-idle: 10
+        #redis最大空闲连接数量 表示即使没有数据连接时依然可以保持50个空闲的连接而不被清除,随时处于待命状态
+        max-idle: 50
+        #最大连接数,这个直接设置成并发量就行，自己看着设置，一般设置成100就可以了，除非你是大项目
+        max-active: 100
+        #等待连接超时时间,如果在等待的连接时间超过了这个时间就舍弃掉,这里配置5分钟
+        max-wait: PT5M
+        #多长时间检查一次连接状况,当空闲连接小于最小空闲连接数量时会做空闲连接的增加
+        #当连接等待超时做废弃连接的清理工作,这里配置5分钟检查一次
+        time-between-eviction-runs: PT5M
+
+
+mybatis:
+  mapper-locations: /mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+
+custom-config:
+  mail:
+    smtp:
+      host: smtp.163.com
+      port: 465
+      socketFactoryPort: 465
+      auth: true
+      account: 15620608572@163.com
+      password: account login password
+      formAddress: 开发者社区 <15620608572@163.com>
+  upload-file:
+    qiniu:
+      accessKey: xVo-57KTRldkxtmB8fwPknDkyfIqsTmWB8LMXVT6
+      secretKey: vt9j4aEaimSz2C-9Nts1nU3FxwhAPj5LnJgeBrd1
+      bucketName: wade-cloud-store-pic-file
+      accessDomain: http://r9g2jyw1d.hn-bkt.clouddn.com
+#      accessDomain: http://r7urz0imb.hn-bkt.clouddn.com
+  view:
+    global:
+      websiteName: 开发者客栈
+      websiteLogoUrl: https://static.developers.pub/logo.jpeg
+      websiteFaviconIconUrl: https://static.developers.pub/favicon.ico
+      contactMeTitle: 联系我 - 官方微信
+      contactMeWxQrCode: https://static.developers.pub/wx_qa_code.jpeg
+      pageSize: 20
+      cdnImgStyle: ?imageView2/2/w/700
+      websiteStartYear: 2016
+      websiteRecord: 皖ICP备17014120号
+      githubClientId: 00eb7c768a16f0e508b5
+    index-page:
+      sidebar-type-names: 公告,活动
+  oauth:
+    github:
+      clientSecret: 09a60b63becd5affae64cd89a95a6ed0ea06cdc4
